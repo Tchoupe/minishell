@@ -6,11 +6,12 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/05/21 20:25:18 by ntom             ###   ########.fr       */
+/*   Updated: 2019/05/23 22:55:20 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include <sys/stat.h>
 
 static int		miniwhitespace(char c)
 {
@@ -71,9 +72,9 @@ static char			**minisplit(char const *s)
 
 static char		**ft_tab_dup(char **str)
 {
-	int		i;
-	int		j;
-	char	**ret;
+	int			i;
+	int			j;
+	char		**ret;
 
 	i = 0;
 	j = 0;
@@ -90,12 +91,55 @@ static char		**ft_tab_dup(char **str)
 	return (ret);
 }
 
+static char		**is_binary(char **envs, char *input)
+{
+	char		**path;
+	int			i;
+
+	path = NULL;
+	i = 0;
+	while (envs[i] && ft_strncmp("PATH", envs[i], 4) != 0)
+		i++;
+	if (!(envs[i]))
+		return (NULL);
+	path = ft_strsplit(envs[i] + 5, ':');
+	return (path);
+}
+
+static int		is_exec(char **binaries, char *input, char *buf)
+{
+	int			i;
+	struct stat	exist;
+
+	if (ft_strchr(input, '/'))
+	{
+		ft_strcpy(buf, input);
+		return (1);
+	}
+	i = 0;
+	while (binaries[i])
+	{
+		buf[0] = '\0';
+		ft_strcat(buf, binaries[i]);
+		if (buf[ft_strlen(buf) - 1] != '/')
+			ft_strcat(buf, "/");
+		ft_strcat(buf, input);
+		if(stat(buf, &exist) != -1)
+			return(1);
+		i++;
+	}
+	buf[0] = '\0';
+	return (0);
+}
+
 int				main(int argc, char **argv, char **env)
 {
-	char	*input;
-	char	**args;
-	char	**envs;
-	int		i;
+	char		*input;
+	char		**args;
+	char		**envs;
+	int			i;
+	char		**binaries;
+	char		path[4097];
 
 	envs = NULL;
 	envs = ft_tab_dup(env);
@@ -104,12 +148,21 @@ int				main(int argc, char **argv, char **env)
 		input = NULL;
 		args = NULL;
 		i = 0;
+		path[0] = '\0';
 		ft_putstr("$> ");
 		if (get_next_line(0, &input) != 1)
+		{
 			ft_putstr("GNL FAILED\n");
+			return (0);
+		}
 		args = minisplit(input);
-		//is_builtin();
-		//execve(NULL, args, env);
+		binaries = is_binary(envs, args[0]);
+		if (is_exec(binaries, args[0], path))
+		{
+			if (!(access(path, X_OK)))
+				execve(path, args, envs);
+		}
+		printf("path == %s\n", path);
 	}
 	return (0);
 }
