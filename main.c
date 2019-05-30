@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/05/24 23:24:56 by ntom             ###   ########.fr       */
+/*   Updated: 2019/05/30 22:56:06 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ static int		is_exec(char **binaries, char *input, char *buf)
 static int		stock_env(char **envs, char ***keys, char ***cont)
 {
 	int			i;
+	char		*tmp;
 
 	i = 0;
 	while (envs[i])
@@ -146,30 +147,12 @@ static int		stock_env(char **envs, char ***keys, char ***cont)
 	i = 0;
 	while(envs[i])
 	{
-		(*keys)[i] = (ft_strndup(envs[i], ((*cont)[i]
-			= (ft_strchr(envs[i], '=') + 1)) - envs[i] - 2));
+		tmp = (ft_strchr(envs[i], '=') + 1);
+		(*cont)[i] = ft_strdup(tmp);
+		(*keys)[i] = (ft_strndup(envs[i], (tmp - envs[i] - 2)));
 		i++;
 	}
 	return (1);
-}
-
-static char		*ft_strsrepl(char *str, char *match, char *replacement)
-{
-    char    *ret;
-    char    *tmp;
-    size_t    total_len;
-
-    if (!(tmp = ft_strstr(str, match)))
-        return (ft_strdup(str));
-    total_len = tmp - str;
-    total_len += ft_strlen(replacement);
-    total_len += ft_strlen(tmp + ft_strlen(match));
-    if (!(ret = ft_strnew(total_len)))
-        return (NULL);
-    ft_strncpy(ret, str, tmp - str);
-    ft_strcat(ret, replacement);
-    ft_strcat(ret, tmp + ft_strlen(match));
-    return (ret);
 }
 
 static	int		check_replace(char **keys, char ** cont, char **input)
@@ -225,6 +208,8 @@ int				main(int argc, char **argv, char **env)
 			ft_putstr("GNL FAILED\n");
 			return (0);
 		}
+		if (!(input[0]))
+			continue ;
 		check_replace(keys, cont, &input);
 		args = minisplit(input);
 		binaries = is_binary(envs, args[0]);
