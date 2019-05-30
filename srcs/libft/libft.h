@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/17 20:29:12 by ntom              #+#    #+#             */
-/*   Updated: 2019/05/24 20:19:12 by ntom             ###   ########.fr       */
+/*   Updated: 2019/05/30 22:55:27 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ void				ft_putbits_int(int j);
 void				ft_putwchart(wchar_t c);
 int					get_next_line(const int fd, char **line);
 char				*ft_strndup(const char *s1, size_t n);
+char				*ft_strsrepl(char *str, char *match, char *replacement);
 
 #endif
