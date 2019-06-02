@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/05/30 22:56:06 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/02 17:52:22 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char			**minisplit(char const *s)
 
 	if (!s)
 		return (NULL);
-	if (!(str = (char **)malloc(sizeof(char *) * (ft_c(s) + 1))))
+	if (!(str = (char **)ft_memalloc(sizeof(char *) * (ft_c(s) + 1))))
 		return (NULL);
 	j = 0;
 	i = 0;
@@ -80,7 +80,7 @@ static char		**ft_tab_dup(char **str)
 	j = 0;
 	while (str[i])
 		i++;
-	if (!(ret = (char **)malloc(sizeof(char *) * (i + 1))))
+	if (!(ret = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
 		return (NULL);
 	while (j < i)
 	{
@@ -102,8 +102,25 @@ static char		**is_binary(char **envs, char *input)
 		i++;
 	if (!(envs[i]))
 		return (NULL);
+		printf("envs [i] => %s\n", envs[i] + 5);
 	path = ft_strsplit(envs[i] + 5, ':');
 	return (path);
+}
+
+static int		is_builtin(char *input)
+{
+	int			i;
+	char		*builtins[]
+	= {"cd", "exit", "echo", "env", "setenv", "unsetenv", NULL};
+
+	i = 0;
+	while (builtins[i])
+	{
+		if (ft_strcmp(builtins[i], input) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 static int		is_exec(char **binaries, char *input, char *buf)
@@ -140,9 +157,9 @@ static int		stock_env(char **envs, char ***keys, char ***cont)
 	i = 0;
 	while (envs[i])
 		i++;
-	if (!(*keys = (char **)malloc(sizeof(char *) * (i + 1))))
+	if (!(*keys = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
 		return (0);
-	if (!(*cont = (char **)malloc(sizeof(char *) * (i + 1))))
+	if (!(*cont = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
 		return (0);
 	i = 0;
 	while(envs[i])
@@ -212,6 +229,11 @@ int				main(int argc, char **argv, char **env)
 			continue ;
 		check_replace(keys, cont, &input);
 		args = minisplit(input);
+		if (is_builtin(input))
+		{
+			printf("builtin ok\n");
+			continue ;
+		}
 		binaries = is_binary(envs, args[0]);
 		if (is_exec(binaries, args[0], path))
 		{
