@@ -6,90 +6,11 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/02 17:52:22 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 00:24:54 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include <sys/stat.h>
-
-static int			miniwhitespace(char c)
-{
-	if (c == '\t' || c == '\v' || c == '\n' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
-
-static size_t		ft_c(char const *s)
-{
-	size_t		count;
-	size_t		i;
-
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		while (miniwhitespace(s[i]) == 1)
-			i++;
-		if (s[i] && miniwhitespace(s[i]) != 1)
-		{
-			while (s[i] && miniwhitespace(s[i]) != 1)
-				i++;
-			count++;
-		}
-	}
-	return (count);
-}
-
-static char			**minisplit(char const *s)
-{
-	char		**str;
-	size_t		i;
-	size_t		j;
-	size_t		start;
-	size_t		len;
-
-	if (!s)
-		return (NULL);
-	if (!(str = (char **)ft_memalloc(sizeof(char *) * (ft_c(s) + 1))))
-		return (NULL);
-	j = 0;
-	i = 0;
-	while (j < ft_c(s))
-	{
-		len = 0;
-		start = 0;
-		while (miniwhitespace(s[i]) == 1)
-			i++;
-		start = i;
-		while (s[i] && miniwhitespace(s[i++]) != 1)
-			len++;
-		str[j++] = ft_strsub(s, start, len);
-	}
-	str[j] = 0;
-	return (str);
-}
-
-static char		**ft_tab_dup(char **str)
-{
-	int			i;
-	int			j;
-	char		**ret;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-		i++;
-	if (!(ret = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
-		return (NULL);
-	while (j < i)
-	{
-		ret[j] = ft_strdup(str[j]);
-		j++;
-	}
-	ret[i] = NULL;
-	return (ret);
-}
 
 static char		**is_binary(char **envs, char *input)
 {
@@ -102,25 +23,8 @@ static char		**is_binary(char **envs, char *input)
 		i++;
 	if (!(envs[i]))
 		return (NULL);
-		printf("envs [i] => %s\n", envs[i] + 5);
 	path = ft_strsplit(envs[i] + 5, ':');
 	return (path);
-}
-
-static int		is_builtin(char *input)
-{
-	int			i;
-	char		*builtins[]
-	= {"cd", "exit", "echo", "env", "setenv", "unsetenv", NULL};
-
-	i = 0;
-	while (builtins[i])
-	{
-		if (ft_strcmp(builtins[i], input) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 static int		is_exec(char **binaries, char *input, char *buf)
@@ -149,93 +53,73 @@ static int		is_exec(char **binaries, char *input, char *buf)
 	return (0);
 }
 
-static int		stock_env(char **envs, char ***keys, char ***cont)
+static int		stock_home_pwd()
+{
+//	while (ft_strcmp() != 0)
+//	infos->home
+	return (0);
+}
+
+static int		stock_env(t_info *infos)
 {
 	int			i;
 	char		*tmp;
 
 	i = 0;
-	while (envs[i])
+	while (infos->envs[i])
 		i++;
-	if (!(*keys = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
+	if (!(infos->keys = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
 		return (0);
-	if (!(*cont = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
+	if (!(infos->cont = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
 		return (0);
 	i = 0;
-	while(envs[i])
+	while (infos->envs[i])
 	{
-		tmp = (ft_strchr(envs[i], '=') + 1);
-		(*cont)[i] = ft_strdup(tmp);
-		(*keys)[i] = (ft_strndup(envs[i], (tmp - envs[i] - 2)));
+		tmp = (ft_strchr(infos->envs[i], '=') + 1);
+		(infos->cont)[i] = ft_strdup(tmp);
+		(infos->keys)[i]
+		= (ft_strndup(infos->envs[i], (tmp - infos->envs[i] - 2)));
+		stock_home_pwd();
 		i++;
 	}
 	return (1);
 }
 
-static	int		check_replace(char **keys, char ** cont, char **input)
-{
-	int			i;
-	char		buf[4097];
-
-	i = 0;
-	while (ft_strcmp(keys[i], "HOME") != 0)
-		i++;
-	*input = ft_strsrepl(*input, "~", cont[i]);
-	i = 0;
-	while (keys[i])
-	{
-		buf[0] = '\0';
-		ft_strcat(buf, "$");
-		ft_strcat(buf, keys[i]);
-		*input = ft_strsrepl(*input, buf, cont[i]);
-		i++;
-	}
-	printf("input ==> %s\n", *input);
-	return (0);
-}
-
 int				main(int argc, char **argv, char **env)
 {
-	char		*input;
-	char		**args;
-	char		**envs;
 	int			i;
-	char		**binaries;
 	char		path[4097];
 	pid_t		pid;
-	int			status;
-	char		**keys;
-	char		**cont;
+	t_info		infos;
 
-	envs = NULL;
-	envs = ft_tab_dup(env);
+	infos.envs = NULL;
+	infos.envs = ft_tab_dup(env);
 	while (19)
 	{
-		keys = NULL;
-		cont = NULL;
-		input = NULL;
-		args = NULL;
-		status = 0;
+		infos.keys = NULL;
+		infos.cont = NULL;
+		infos.input = NULL;
+		infos.args = NULL;
+		infos.status = 0;
+		infos.home = NULL;
+		infos.pwd = NULL;
 		i = 0;
 		path[0] = '\0';
-		stock_env(envs, &keys, &cont);
+		stock_env(&infos);
 		ft_putstr("$> ");
-		if (get_next_line(0, &input) != 1)
+		if (get_next_line(0, &infos.input) != 1)
 		{
 			ft_putstr("GNL FAILED\n");
 			return (0);
 		}
-		if (!(input[0]))
+		if (!(infos.input[0]))
 			continue ;
-		check_replace(keys, cont, &input);
-		args = minisplit(input);
-		if (is_builtin(input))
-		{
-			printf("builtin ok\n");
+		check_replace(infos.keys, infos.cont, &infos.input);
+		infos.args = minisplit(infos.input);
+		if (is_builtin(infos.input, infos.args, infos.envs))
 			continue ;
-		}
-		binaries = is_binary(envs, args[0]);
-		if (is_exec(binaries, args[0], path))
+		infos.binaries = is_binary(infos.envs, infos.args[0]);
+		if (is_exec(infos.binaries, infos.args[0], path))
 		{
 			if (!(access(path, X_OK)))
 			{
@@ -246,11 +130,11 @@ int				main(int argc, char **argv, char **env)
 				}
 				else if (pid == 0)
 				{
-					execve(path, args, envs);
+					execve(path, infos.args, infos.envs);
 					exit(0);
 				}
 				else
-					wait(&status);
+					wait(&infos.status);
 			}
 			else
 				ft_putstr("cant execute\n");
@@ -258,7 +142,7 @@ int				main(int argc, char **argv, char **env)
 		else
 		{
 			ft_putstr("minishell: command not found: ");
-			ft_putstr(args[0]);
+			ft_putstr(infos.args[0]);
 			ft_putchar('\n');
 		}
 	}

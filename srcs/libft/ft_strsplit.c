@@ -6,7 +6,7 @@
 /*   By: ntom <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/02 12:00:01 by ntom              #+#    #+#             */
-/*   Updated: 2018/07/02 17:57:16 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/03 15:41:59 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char				**ft_strsplit(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	if (!(str = (char **)malloc(sizeof(char *) * (ft_c(s, c) + 1))))
+	if (!(str = (char **)ft_memalloc(sizeof(char *) * (ft_c(s, c) + 1))))
 		return (NULL);
 	j = 0;
 	i = 0;
