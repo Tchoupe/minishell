@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/03 23:20:09 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 13:35:18 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ size_t		ft_c(char const *s)
 	return (count);
 }
 
-char		**minisplit(char const *s)
+char		**minisplit(char const *s, int *argc)
 {
 	char		**str;
 	size_t		i;
@@ -54,7 +54,8 @@ char		**minisplit(char const *s)
 		return (NULL);
 	j = 0;
 	i = 0;
-	while (j < ft_c(s))
+	*argc = ft_c(s);
+	while (j < *argc)
 	{
 		len = 0;
 		start = 0;

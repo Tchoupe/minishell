@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 00:24:54 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 16:13:43 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ static int		is_exec(char **binaries, char *input, char *buf)
 	return (0);
 }
 
-static int		stock_home_pwd()
+static int		stock_home_pwd(t_info *infos, int i, int j)
 {
-//	while (ft_strcmp() != 0)
-//	infos->home
+	if (j == 1)
+		infos->home = infos->cont[i];
+	else if (j == 2)
+		infos->pwd = infos->cont[i];
 	return (0);
 }
 
@@ -77,9 +79,12 @@ static int		stock_env(t_info *infos)
 	{
 		tmp = (ft_strchr(infos->envs[i], '=') + 1);
 		(infos->cont)[i] = ft_strdup(tmp);
-		(infos->keys)[i]
-		= (ft_strndup(infos->envs[i], (tmp - infos->envs[i] - 2)));
-		stock_home_pwd();
+		(infos->keys)[i] =
+			(ft_strndup(infos->envs[i], (tmp - infos->envs[i] - 2)));
+		if (ft_strcmp(infos->keys[i], "HOME") == 0)
+			stock_home_pwd(infos, i, 1);
+		else if (ft_strcmp(infos->keys[i], "PWD") == 0)
+			stock_home_pwd(infos, i, 2);
 		i++;
 	}
 	return (1);
@@ -101,8 +106,6 @@ int				main(int argc, char **argv, char **env)
 		infos.input = NULL;
 		infos.args = NULL;
 		infos.status = 0;
-		infos.home = NULL;
-		infos.pwd = NULL;
 		i = 0;
 		path[0] = '\0';
 		stock_env(&infos);
@@ -115,8 +118,8 @@ int				main(int argc, char **argv, char **env)
 		if (!(infos.input[0]))
 			continue ;
 		check_replace(infos.keys, infos.cont, &infos.input);
-		infos.args = minisplit(infos.input);
-		if (is_builtin(infos.input, infos.args, infos.envs))
+		infos.args = minisplit(infos.input, &infos.argc);
+		if (is_builtin(&infos))
 			continue ;
 		infos.binaries = is_binary(infos.envs, infos.args[0]);
 		if (is_exec(infos.binaries, infos.args[0], path))

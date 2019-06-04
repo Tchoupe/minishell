@@ -6,18 +6,17 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/03 23:53:45 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 16:25:05 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_env(char **args, char **envs)
+void	ft_env(t_info *infos)
 {
 	int		i;
 
 	i = 0;
-	while (envs[i])
-		ft_putendl(envs[i++]);
-	exit(0);
+	while (infos->envs[i])
+		ft_putendl(infos->envs[i++]);
 }

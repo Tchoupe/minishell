@@ -6,18 +6,18 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 00:02:07 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 16:13:33 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_echo(char **args, char **envs)
+void	ft_echo(t_info *infos)
 {
 	int		i;
 
-	i = 0;
-	while (args[i])
-		ft_putendl(args[i++]);
-	exit(0);
+	i = 1;
+	while (infos->args[i])
+		ft_putstr(infos->args[i++]);
+	ft_putchar('\n');
 }

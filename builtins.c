@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 00:05:52 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 15:59:15 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,7 @@ const t_fct g_fct_builtins[] = {
 	{ft_unsetenv}
 };
 
-int		exe_builtin(int i, char **args, char **envs)
-{
-	int		pid;
-	int		status;
-
-	pid = 0;
-	status = 0;
-	if (i != 1)
-	{
-		if ((pid = fork()) < 0)
-		{
-			ft_putstr("Fork error\n");
-			exit(0);
-		}
-		else if (pid == 0)
-		{
-			g_fct_builtins[i].f(args, envs);
-			exit(0);
-		}
-		else
-			wait(&status);
-	}
-	else
-		exit(0);
-	return (1);
-}
-
-int		is_builtin(char *input, char **args, char **envs)
+int		is_builtin(t_info *infos)
 {
 	int			i;
 	const char	*builtins[] = {
@@ -64,8 +37,13 @@ int		is_builtin(char *input, char **args, char **envs)
 	i = 0;
 	while (builtins[i])
 	{
-		if (ft_strcmp(builtins[i], args[0]) == 0)
-			return (exe_builtin(i, args, envs));
+		if (ft_strcmp(builtins[i], infos->args[0]) == 0)
+		{
+			if (i == 1)
+				exit(0);
+			g_fct_builtins[i].f(infos);
+			return (1);
+		}
 		i++;
 	}
 	return (0);

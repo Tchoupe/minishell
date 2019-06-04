@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 00:22:35 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 13:35:50 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_info
 	char		**cont;
 	char		*home;
 	char		*pwd;
+	int			argc;
 }				t_info;
 
 /*
@@ -67,8 +68,7 @@ void			ft_unsetenv();
 ** BUILTINS.C
 */
 
-int				is_builtin(char *input, char **args, char **envs);
-int				exe_builtin(int i, char **args, char **envs);
+int				is_builtin(t_info *infos);
 
 /*
 ** TOOLS.C
@@ -76,7 +76,7 @@ int				exe_builtin(int i, char **args, char **envs);
 
 int				miniwhitespace(char c);
 size_t			ft_c(char const *s);
-char			**minisplit(char const *s);
+char			**minisplit(char const *s, int *argc);
 char			**ft_tab_dup(char **str);
 int				check_replace(char **keys, char **cont, char **input);
 

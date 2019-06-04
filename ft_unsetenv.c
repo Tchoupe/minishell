@@ -6,13 +6,12 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/03 20:35:33 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/04 16:24:37 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_unsetenv(char **args, char **envs)
+void	ft_unsetenv(t_info *infos)
 {
-	exit(0);
 }
