@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 13:35:50 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/07 16:35:48 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef struct	s_info
 	char		**keys;
 	char		**cont;
 	char		*home;
-	char		*pwd;
+	char		pwd[4097];
+	char		oldpwd[4097];
 	int			argc;
 }				t_info;
 

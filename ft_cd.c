@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/05 01:19:58 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/07 23:57:42 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 void	ft_cd(t_info *infos)
 {
 	struct stat		buf;
-	char			*tmp;
 
-	infos->pwd = getcwd(NULL, 0);
-	tmp = NULL;
-	chdir("srcs");
-	printf("cwd == > %s\n", getcwd(NULL, 0));
+	getcwd(infos->pwd, 4097);
 	if (infos->argc > 2)
 	{
 		ft_putendl("cd: too many arguments");
 		return ;
 	}
-	if (infos->argc > 1)
+	else if (infos->argc > 1)
 	{
 		if (stat(infos->args[1], &buf) == -1)
 		{
+			if (infos->args[1][0] == '-' && !infos->args[1][1])
+			{
+				if (chdir(infos->oldpwd) != 0)
+					ft_putstr("OLDPWD: Undefined variable.\n");
+				return ;
+			}
 			ft_putstr("cd: no such file or directory: ");
 			ft_putendl(infos->args[1]);
 			return ;
@@ -42,18 +44,20 @@ void	ft_cd(t_info *infos)
 		}
 		if (ft_strcmp(infos->args[1], infos->home) == 0)
 			if (chdir(infos->home) != 0)
-				ft_putstr("cd : home: failed for some reason\n");
+				ft_putstr("HOME: Undefined variable.\n");
 		if (infos->args[1][0] == '/')
 		{
 			if (chdir(infos->args[1]) != 0)
-				ft_putstr("cd : truc failed for some reason\n");
+				ft_putstr("ROOT: Undefined variable\n");
 		}
 		else if (access(infos->args[1], R_OK) == 0)
 		{
-			tmp = ft_strcat(infos->pwd, "/");
-			if (chdir(tmp = ft_strcat(tmp, infos->args[1])) != 0)
-				ft_putstr("cd : home: failed for some reason\n");
-			printf("tmp => %s\n", tmp);
+			if (chdir(infos->args[1]) != 0)
+			{
+				ft_putstr("cd: permission denied: ");
+				ft_putendl(infos->args[1]);
+				return ;
+			}
 		}
 		else
 		{
@@ -62,9 +66,10 @@ void	ft_cd(t_info *infos)
 			ft_putstr(": Permission denied\n");
 		}
 	}
-	if (infos->argc == 1)
+	else if (infos->argc == 1)
 		if (chdir(infos->home) != 0)
-			ft_putstr("cd : home: failed for some reason\n");
-	infos->pwd = getcwd(NULL, 0);
-	printf("infos->pwd => %s\n", infos->pwd);
+			ft_putstr("HOME: Undefined variable.\n");
+	infos->oldpwd[0] = '\0';
+	ft_strcat(infos->oldpwd, infos->pwd);
+	getcwd(infos->pwd, 4097);
 }
