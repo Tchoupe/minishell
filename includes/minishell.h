@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/07 16:35:48 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/08 18:16:38 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,19 @@ int				miniwhitespace(char c);
 size_t			ft_c(char const *s);
 char			**minisplit(char const *s, int *argc);
 char			**ft_tab_dup(char **str);
-int				check_replace(char **keys, char **cont, char **input);
+int				check_replace(t_info *infos);
+
+/*
+** INIT_VARS.C
+*/
+
+void			init_vars(t_info *infos, char **env);
+void			init_vars_prompt(t_info *infos, int *i, char *path);
+
+/*
+** MAIN.C
+*/
+
+int				stock_env(t_info *infos);
 
 #endif

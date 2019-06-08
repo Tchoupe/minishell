@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 13:35:18 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/08 18:15:56 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,22 +91,27 @@ char		**ft_tab_dup(char **str)
 	return (ret);
 }
 
-int			check_replace(char **keys, char **cont, char **input)
+int			check_replace(t_info *infos)
 {
 	int			i;
 	char		buf[4097];
 
 	i = 0;
-	while (ft_strcmp(keys[i], "HOME") != 0)
+	while (ft_strcmp(infos->keys[i], "HOME") != 0)
 		i++;
-	*input = ft_strsrepl(*input, "~", cont[i]);
+	infos->input = ft_strsrepl(infos->input, "~", infos->cont[i]);
 	i = 0;
-	while (keys[i])
+	while (infos->keys[i])
 	{
 		buf[0] = '\0';
 		ft_strcat(buf, "$");
-		ft_strcat(buf, keys[i]);
-		*input = ft_strsrepl(*input, buf, cont[i]);
+		ft_strcat(buf, infos->keys[i]);
+		if (ft_strcmp("PWD", infos->keys[i]) == 0)
+			infos->input = ft_strsrepl(infos->input, buf, infos->pwd);
+		else if (ft_strcmp("OLDPWD", infos->keys[i]) == 0)
+			infos->input = ft_strsrepl(infos->input, buf, infos->oldpwd);
+		else
+			infos->input = ft_strsrepl(infos->input, buf, infos->cont[i]);
 		i++;
 	}
 	return (0);
