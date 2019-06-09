@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 15:13:52 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 22:32:48 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int				check_replace(t_info *infos);
 ** INIT_VARS.C
 */
 
-void			init_vars(t_info *infos, char **env);
-void			init_vars_prompt(t_info *infos, int *i, char *path);
+void			init_vars(t_info *infos, char **env, int argc, char **argv);
+int				init_vars_prompt(t_info *infos, int *i, char *path);
 
 /*
 ** MAIN.C

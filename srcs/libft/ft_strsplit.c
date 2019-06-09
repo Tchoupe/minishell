@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/02 12:00:01 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 16:39:39 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 22:25:38 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ char				**ft_strsplit(char const *s, char c)
 		while (s[i] == c)
 			i++;
 		start = i;
-		while (s[i++] != c)
+		while (s[i] != '\0' && s[i++] != c)
 			len++;
 		str[j++] = ft_strsub(s, start, len);
-		printf("str[%lu] => %s\n", (j - 1), str[j - 1]);
 	}
 	str[j] = 0;
 	return (str);

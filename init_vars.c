@@ -6,14 +6,16 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 15:13:47 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 22:32:38 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void		init_vars(t_info *infos, char **env)
+void		init_vars(t_info *infos, char **env, int argc, char **argv)
 {
+	if (argc || argv)
+		;
 	infos->envs = NULL;
 	infos->keys = NULL;
 	infos->cont = NULL;
@@ -23,7 +25,7 @@ void		init_vars(t_info *infos, char **env)
 	stock_env(infos);
 }
 
-void		init_vars_prompt(t_info *infos, int *i, char *path)
+int			init_vars_prompt(t_info *infos, int *i, char *path)
 {
 	infos->input = NULL;
 	infos->args = NULL;
@@ -34,6 +36,7 @@ void		init_vars_prompt(t_info *infos, int *i, char *path)
 	if (get_next_line(0, &infos->input) != 1)
 	{
 		ft_putstr("GNL FAILED\n");
-		return ;
+		return (1);
 	}
+	return (0);
 }

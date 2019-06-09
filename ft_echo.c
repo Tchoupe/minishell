@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 16:13:33 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 22:36:57 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	ft_echo(t_info *infos)
 
 	i = 1;
 	while (infos->args[i])
-		ft_putstr(infos->args[i++]);
+	{
+		ft_putstr(infos->args[i]);
+		i++;
+		if (infos->args[i])
+			ft_putchar(' ');
+	}
 	ft_putchar('\n');
 }

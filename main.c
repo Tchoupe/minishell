@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 16:47:09 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 22:33:56 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ static char			**is_binary(t_info *infos)
 
 	path = NULL;
 	i = 0;
-	while (infos->envs[i] && ft_strncmp("PATH=", infos->envs[i], 5) != 0)
+	while (infos->keys[i] && ft_strcmp("PATH", infos->keys[i]) != 0)
 		i++;
-	if (!(infos->envs[i]))
+	if (!(infos->keys[i]))
 		return (NULL);
-	//printf("envs,keys[%d] == %s == %s\n", i, infos->envs[i], infos->keys[i]);
-	path = ft_strsplit(infos->envs[i] + 5, ':');
+	path = ft_strsplit(infos->cont[i], ':');
 	return (path);
 }
 
@@ -33,6 +32,8 @@ static int			is_exec(char **binaries, char *input, char *buf)
 	int				i;
 	struct stat		exist;
 
+	if (!binaries)
+		return (1);
 	if (ft_strchr(input, '/'))
 	{
 		ft_strcpy(buf, input);
@@ -94,14 +95,13 @@ int					stock_env(t_info *infos)
 		tmp = (ft_strchr(infos->envs[i], '=') + 1);
 		(infos->cont)[i] = ft_strdup(tmp);
 		(infos->keys)[i] =
-			(ft_strndup(infos->envs[i], (tmp - infos->envs[i] - 2)));
+			(ft_strndup(infos->envs[i], (tmp - infos->envs[i] - 1)));
 		if (ft_strcmp(infos->keys[i], "HOME") == 0)
 			infos->home = infos->cont[i];
 		else if (ft_strcmp(infos->keys[i], "PWD") == 0)
 			getcwd(infos->pwd, 4097);
 		else if (ft_strcmp(infos->keys[i], "OLDPWD") == 0)
 			ft_strcat(infos->oldpwd, infos->cont[i]);
-		//printf("keys[%d] == %s, cont[%d] == %s\nenvs[%d] == %s\n", i, infos->keys[i], i, infos->cont[i], i, infos->envs[i]);
 		i++;
 	}
 	return (1);
@@ -113,20 +113,16 @@ int					main(int argc, char **argv, char **env)
 	t_info			infos;
 	char			path[4097];
 
-	if (argc || argv)
-		;
-	init_vars(&infos, env);
+	init_vars(&infos, env, argc, argv);
 	while (19)
 	{
-		init_vars_prompt(&infos, &i, path);
-		if (!(infos.input[0]))
+		if (init_vars_prompt(&infos, &i, path) != 0 || !(infos.input[0]))
 			continue ;
 		check_replace(&infos);
 		infos.args = minisplit(infos.input, &infos.argc);
 		if (!infos.args[0] || is_builtin(&infos))
 			continue ;
-		infos.binaries = is_binary(&infos);;
-	//	infos.binaries = is_binary(infos.envs, infos.args[0]);
+		infos.binaries = is_binary(&infos);
 		if (is_exec(infos.binaries, infos.args[0], path))
 			forking(&infos, path);
 		else
@@ -135,7 +131,6 @@ int					main(int argc, char **argv, char **env)
 			ft_putstr(infos.args[0]);
 			ft_putchar('\n');
 		}
-	//	printf("keys[0] == %s\n", infos.keys[0]);
 	}
 	return (0);
 }

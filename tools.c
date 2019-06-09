@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 16:48:37 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 22:18:43 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,7 @@ int			check_replace(t_info *infos)
 	int			i;
 	char		buf[4097];
 
-	i = 0;
-	while (ft_strcmp(infos->keys[i], "HOME") != 0)
-		i++;
-	infos->input = ft_strsrepl(infos->input, "~", infos->cont[i]);
+	infos->input = ft_strsrepl(infos->input, "~", infos->home);
 	i = 0;
 	while (infos->keys[i])
 	{
