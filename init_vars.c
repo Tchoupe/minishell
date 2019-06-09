@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/08 18:16:33 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 15:13:47 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void		init_vars(t_info *infos, char **env)
 	infos->oldpwd[0] = '\0';
 	stock_env(infos);
 }
-
 
 void		init_vars_prompt(t_info *infos, int *i, char *path)
 {

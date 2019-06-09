@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/08 18:15:56 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 16:48:37 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,12 @@ size_t		ft_c(char const *s)
 char		**minisplit(char const *s, int *argc)
 {
 	char		**str;
-	size_t		i;
-	size_t		j;
-	size_t		start;
-	size_t		len;
+	int			i;
+	int			j;
+	int			start;
+	int			len;
 
-	if (!s)
-		return (NULL);
-	if (!(str = (char **)ft_memalloc(sizeof(char *) * (ft_c(s) + 1))))
+	if (!s || !(str = (char **)ft_memalloc(sizeof(char *) * (ft_c(s) + 1))))
 		return (NULL);
 	j = 0;
 	i = 0;

@@ -6,13 +6,63 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/07 23:57:42 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/09 16:45:16 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_cd(t_info *infos)
+static void		ft_cd3(t_info *infos)
+{
+	if (infos->args[1][0] == '/')
+	{
+		if (chdir(infos->args[1]) != 0)
+			ft_putstr("ROOT: Undefined variable\n");
+	}
+	else if (access(infos->args[1], R_OK) == 0)
+	{
+		if (chdir(infos->args[1]) != 0)
+		{
+			ft_putstr("cd: permission denied: ");
+			ft_putendl(infos->args[1]);
+			return ;
+		}
+	}
+	else
+	{
+		ft_putstr("cd: ");
+		ft_putstr(infos->args[1]);
+		ft_putstr(": Permission denied\n");
+	}
+}
+
+static void		ft_cd2(t_info *infos, struct stat *buf)
+{
+	if (stat(infos->args[1], buf) == -1)
+	{
+		if (infos->args[1][0] == '-' && !infos->args[1][1])
+		{
+			if (chdir(infos->oldpwd) != 0)
+				ft_putstr("OLDPWD: Undefined variable.\n");
+			return ;
+		}
+		ft_putstr("cd: no such file or directory: ");
+		ft_putendl(infos->args[1]);
+		return ;
+	}
+	if (!S_ISDIR(buf->st_mode))
+	{
+		ft_putstr("cd: not a directory: ");
+		ft_putendl(infos->args[1]);
+		return ;
+	}
+	if (ft_strcmp(infos->args[1], infos->home) == 0)
+		if (chdir(infos->home) != 0)
+			ft_putstr("HOME: Undefined variable.\n");
+	ft_cd3(infos);
+}
+
+void			ft_cd(t_info *infos)
 {
 	struct stat		buf;
 
@@ -24,47 +74,7 @@ void	ft_cd(t_info *infos)
 	}
 	else if (infos->argc > 1)
 	{
-		if (stat(infos->args[1], &buf) == -1)
-		{
-			if (infos->args[1][0] == '-' && !infos->args[1][1])
-			{
-				if (chdir(infos->oldpwd) != 0)
-					ft_putstr("OLDPWD: Undefined variable.\n");
-				return ;
-			}
-			ft_putstr("cd: no such file or directory: ");
-			ft_putendl(infos->args[1]);
-			return ;
-		}
-		if (!S_ISDIR(buf.st_mode))
-		{
-			ft_putstr("cd: not a directory: ");
-			ft_putendl(infos->args[1]);
-			return ;
-		}
-		if (ft_strcmp(infos->args[1], infos->home) == 0)
-			if (chdir(infos->home) != 0)
-				ft_putstr("HOME: Undefined variable.\n");
-		if (infos->args[1][0] == '/')
-		{
-			if (chdir(infos->args[1]) != 0)
-				ft_putstr("ROOT: Undefined variable\n");
-		}
-		else if (access(infos->args[1], R_OK) == 0)
-		{
-			if (chdir(infos->args[1]) != 0)
-			{
-				ft_putstr("cd: permission denied: ");
-				ft_putendl(infos->args[1]);
-				return ;
-			}
-		}
-		else
-		{
-			ft_putstr("cd: ");
-			ft_putstr(infos->args[1]);
-			ft_putstr(": Permission denied\n");
-		}
+		ft_cd2(infos, &buf);
 	}
 	else if (infos->argc == 1)
 		if (chdir(infos->home) != 0)
