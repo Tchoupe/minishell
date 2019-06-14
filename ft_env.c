@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/07 23:42:25 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/13 13:21:24 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_env(t_info *infos)
 	int		i;
 
 	i = 0;
-	while (infos->envs[i])
+	while (infos->keys[i])
 	{
 		if (ft_strcmp("PWD", infos->keys[i]) == 0)
 		{
