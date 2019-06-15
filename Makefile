@@ -6,7 +6,7 @@
 #    By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/30 16:32:31 by ntom              #+#    #+#              #
-#    Updated: 2019/06/15 17:25:09 by ntom             ###   ########.fr        #
+#    Updated: 2019/06/15 17:37:07 by ntom             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,12 @@ fclean: clean
 
 lib:
 	make re -C $(LIBDIR)
+
+norm:
+	@norminette $(SRC) | lolcat
+
+normlib:
+	@norminette $(LIBDIR)/*.c | lolcat
 
 re: fclean all
 
