@@ -6,27 +6,38 @@
 #    By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/30 16:32:31 by ntom              #+#    #+#              #
-#    Updated: 2019/06/09 16:56:38 by ntom             ###   ########.fr        #
+#    Updated: 2019/06/15 17:25:09 by ntom             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-C = gcc
-F = -Wall -Wextra -Werror
-S = builtins.c ft_env.c ft_cd.c ft_setenv.c init_vars.c ft_echo.c ft_unsetenv.c main.c tools.c
-O = builtins.o ft_env.o ft_cd.o ft_setenv.o init_vars.o ft_echo.o ft_unsetenv.o main.o tools.o
-NAME = libft.a
+NAME = minishell
+CC = gcc
+CFLAGS += -Wall -Wextra -Werror -I includes
+LIBDIR = srcs/libft
+
+SRC = builtins.c ft_cd.c ft_echo.c ft_env.c ft_setenv.c ft_unsetenv.c \
+		init_vars.c main.c signals.c tools.c
+
+O_FILES = $(SRC:%.c=%.o)
+FLAGLIB = -L$(LIBDIR) -lft
 
 all: $(NAME)
 
-$(NAME):
-	   @$(C) $(F) -I. -c $(S) ./srcs/libft/libft.a
-	   @ar rc $(NAME) $(O)
-	   @ranlib $(NAME)
+$(NAME): $(O_FILES)
+	make all -C $(LIBDIR)
+	@gcc $(CFLAGS) $(FLAGLIB) -o $(NAME) $(O_FILES)
 
 clean:
-	   @rm -f $(O)
+	/bin/rm -rf $(O_FILES)
+	make clean -C $(LIBDIR)
 
 fclean: clean
-	   @rm -f $(NAME)
+	/bin/rm -rf $(NAME)
+	make fclean -C $(LIBDIR)
 
-re: fclean $(NAME)
+lib:
+	make re -C $(LIBDIR)
+
+re: fclean all
+
+.PHONY: all fclean clean re
