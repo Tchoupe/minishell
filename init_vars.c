@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 22:32:38 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/15 16:55:20 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int			init_vars_prompt(t_info *infos, int *i, char *path)
 	ft_putstr("$> ");
 	if (get_next_line(0, &infos->input) != 1)
 	{
+		if (infos->input == NULL)
+		{
+			ft_putendl("exit");
+			exit(0);
+		}
 		ft_putstr("GNL FAILED\n");
 		return (1);
 	}

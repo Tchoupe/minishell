@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 22:33:56 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/15 16:29:12 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,11 @@ static void			forking(t_info *infos, char *path)
 			exit(0);
 		}
 		else
+		{
+			signal(SIGINT, proghandler);
 			wait(&infos->status);
+			signal(SIGINT, c_handler);
+		}
 	}
 	else
 		ft_putstr("Cannot execute\n");
@@ -107,6 +111,7 @@ int					stock_env(t_info *infos)
 	return (1);
 }
 
+
 int					main(int argc, char **argv, char **env)
 {
 	int				i;
@@ -114,6 +119,7 @@ int					main(int argc, char **argv, char **env)
 	char			path[4097];
 
 	init_vars(&infos, env, argc, argv);
+	signal(SIGINT, c_handler);
 	while (19)
 	{
 		if (init_vars_prompt(&infos, &i, path) != 0 || !(infos.input[0]))

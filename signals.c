@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/20 18:36:58 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/15 15:40:04 by ntom             ###   ########.fr       */
+/*   Created: 2019/06/15 16:27:11 by ntom              #+#    #+#             */
+/*   Updated: 2019/06/15 16:35:46 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/minishell.h"
 
-char	*ft_strcat(char *s1, const char *s2)
+void	c_handler(int sig_num)
 {
-	size_t i;
-	size_t j;
+	signal(SIGINT, c_handler);
+	ft_putchar('\n');
+	ft_putstr("$> ");
+	(void)sig_num;
+}
 
-	i = 0;
-	j = (size_t)ft_strlen(s1);
-	while (*(s2 + i))
-		*(s1 + j++) = *(s2 + i++);
-	*(s1 + j) = '\0';
-	return (s1);
+void	proghandler(int sig_num)
+{
+	ft_putchar('\n');
+	signal(SIGINT, SIG_IGN);
+	(void)sig_num;
 }

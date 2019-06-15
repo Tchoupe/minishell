@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/14 20:05:35 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/15 15:45:17 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void		stock_set(t_info *infos)
 		else if (ft_strcmp(infos->keys[i], "PWD") == 0)
 			getcwd(infos->pwd, 4097);
 		else if (ft_strcmp(infos->keys[i], "OLDPWD") == 0)
-			ft_strcat(infos->oldpwd, infos->cont[i]);
+			ft_strcpy(infos->oldpwd, infos->cont[i]);
 		i++;
 	}
 }

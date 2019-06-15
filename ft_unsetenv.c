@@ -6,13 +6,13 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/14 18:43:36 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/15 15:34:14 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static void		unset_allocation(t_info *infos)
+/*static void		unset_allocation(t_info *infos)
 {
 	int			i;
 	char		**keys_tmp;
@@ -55,11 +55,13 @@ static void		stock_set(t_info *infos)
 			ft_strcat(infos->oldpwd, infos->cont[i]);
 		i++;
 	}
-}
+}*/
 
 void	ft_unsetenv(t_info *infos)
 {
-	int			i;
+	if (infos)
+		;
+	/*int			i;
 	int			j;
 
 	if (error_unset(infos) == 0)
@@ -70,5 +72,5 @@ void	ft_unsetenv(t_info *infos)
 
 	}
 	unset_allocation(infos);
-	return (stock_unset(infos));
+	return (stock_unset(infos));*/
 }

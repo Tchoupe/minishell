@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 22:32:48 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/15 16:29:10 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ int				init_vars_prompt(t_info *infos, int *i, char *path);
 */
 
 int				stock_env(t_info *infos);
+void			c_handler(int sig_num);
+void			proghandler(int sig_num);
 
 #endif

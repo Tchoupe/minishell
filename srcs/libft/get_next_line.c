@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntom <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 18:15:36 by ntom              #+#    #+#             */
-/*   Updated: 2019/05/21 02:23:32 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/15 16:56:37 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static int	getn(char *tab[OPEN_MAX], const int fd, char **line)
 	i = 0;
 	if (!(tab[fd]) || tab[fd][0] == '\0')
 	{
-		if (tab[fd][0] == '\0')
-			ft_strdel(&tab[fd]);
+		ft_strdel(&tab[fd]);
 		return (0);
 	}
 	tmp = tab[fd];

@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/09 16:45:16 by ntom             ###   ########.fr       */
+/*   Updated: 2019/06/15 15:43:28 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void		ft_cd2(t_info *infos, struct stat *buf)
 {
 	if (stat(infos->args[1], buf) == -1)
 	{
+		printf("PWD %s, OLDPWD %s\n", infos->pwd, infos->oldpwd);
 		if (infos->args[1][0] == '-' && !infos->args[1][1])
 		{
 			if (chdir(infos->oldpwd) != 0)
