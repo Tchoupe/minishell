@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 21:08:41 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 00:47:35 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ size_t			ft_c(char const *s);
 char			**minisplit(char const *s, int *argc);
 char			**ft_tab_dup(char **str, int size);
 int				check_replace(t_info *infos);
+char			**replace_tilde(char **str, t_info *infos);
 
 /*
 ** INIT_VARS.C

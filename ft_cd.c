@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 22:01:09 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 00:49:55 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,7 @@ static void		ft_cd3(t_info *infos)
 
 static void		ft_cd2(t_info *infos, struct stat *buf)
 {
-	if (infos->args[1][0] == '~' && infos->args[1][1] == '\0')
-	{
-		if (find_env(infos, "HOME") == -1)
-			ft_putstr("HOME: Undefined variable.\n");
-		else
-			chdir(ft_strchr(infos->envs[find_env(infos, "HOME")], '=') + 1);
-		return ;
-	}
-	else if (stat(infos->args[1], buf) == -1)
+	if (stat(infos->args[1], buf) == -1)
 	{
 		if (infos->args[1][0] == '-' && !infos->args[1][1])
 		{

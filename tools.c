@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 22:51:46 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 01:01:00 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ size_t		ft_c(char const *s)
 		}
 	}
 	return (count);
+}
+
+char		**replace_tilde(char **str, t_info *infos)
+{
+	int			i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i][0] == '~')
+			str[i] = ft_strsrepl(str[i], "~",
+			ft_strchr(infos->envs[find_env(infos, "HOME")], '=') + 1);
+		i++;
+	}
+	return (str);
 }
 
 char		**minisplit(char const *s, int *argc)

@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 00:30:02 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 00:47:23 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int					main(int argc, char **argv, char **env)
 			continue ;
 		check_replace(&infos);
 		infos.args = minisplit(infos.input, &infos.argc);
+		infos.args = replace_tilde(infos.args, &infos);
 		if (!infos.args[0] || is_builtin(&infos))
 			continue ;
 		infos.binaries = is_binary(&infos);
