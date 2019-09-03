@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 14:11:42 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/03 21:08:41 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int				is_builtin(t_info *infos);
 int				miniwhitespace(char c);
 size_t			ft_c(char const *s);
 char			**minisplit(char const *s, int *argc);
-char			**ft_tab_dup(char **str);
+char			**ft_tab_dup(char **str, int size);
 int				check_replace(t_info *infos);
 
 /*
@@ -81,7 +81,13 @@ int				check_replace(t_info *infos);
 */
 
 void			init_vars(t_info *infos, char **env);
-int				init_vars_prompt(t_info *infos, int *i, char *path);
+int				init_vars_prompt(t_info *infos, int *i, char **path);
+
+/*
+** FREE_STUFF.C
+*/
+
+void			ft_tabdel(char **tab);
 
 /*
 ** MAIN.C

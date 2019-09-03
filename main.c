@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 14:11:28 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/03 21:29:36 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,12 @@
 int				find_env(t_info *infos, char *needle)
 {
 	int				i;
-	int				j;
 
 	i = 0;
 	while (infos->envs[i])
 	{
-		j = 0;
-		while (infos->envs[i][j] && needle[j])
-		{
-			if (infos->envs[i][j] == '=' && needle[j] == '\0')
-				return (i);
-			if (infos->envs[i][j] != needle[j])
-				break ;
-			j++;
-		}
+		if (ft_strcmp(infos->envs[i], needle) == 61)
+			return (i);
 		i++;
 	}
 	return (-1);
@@ -50,16 +42,19 @@ static char			**is_binary(t_info *infos)
 	return (path);
 }
 
-static int			is_exec(char **binaries, char *input, char *buf)
+static int			is_exec(char **binaries, char *input, char **path)
 {
 	int				i;
 	struct stat		exist;
+	char			buf[4097];
 
+	buf[0] = '\0';
 	if (!binaries)
 		return (1);
+	ft_strdel(path);
 	if (ft_strchr(input, '/'))
 	{
-		ft_strcpy(buf, input);
+		*path = ft_strdup(input);
 		return (1);
 	}
 	i = 0;
@@ -71,10 +66,13 @@ static int			is_exec(char **binaries, char *input, char *buf)
 			ft_strcat(buf, "/");
 		ft_strcat(buf, input);
 		if (stat(buf, &exist) != -1)
+		{
+			*path = ft_strdup(buf);
 			return (1);
+		}
 		i++;
 	}
-	buf[0] = '\0';
+	*path = ft_strdup(buf);
 	return (0);
 }
 
@@ -109,22 +107,22 @@ int					main(int argc, char **argv, char **env)
 {
 	int				i;
 	t_info			infos;
-	char			path[4097];
+	char			*path;
 
-	if (argv || argc)
+	if ((path = NULL) || argv || argc)
 		;
 	init_vars(&infos, env);
 	signal(SIGINT, c_handler);
 	while (19)
 	{
-		if (init_vars_prompt(&infos, &i, path) != 0 || !(infos.input[0]))
+		if (init_vars_prompt(&infos, &i, &path) != 0 || !(infos.input[0]))
 			continue ;
 		check_replace(&infos);
 		infos.args = minisplit(infos.input, &infos.argc);
 		if (!infos.args[0] || is_builtin(&infos))
 			continue ;
 		infos.binaries = is_binary(&infos);
-		if (is_exec(infos.binaries, infos.args[0], path))
+		if (is_exec(infos.binaries, infos.args[0], &path))
 			forking(&infos, path);
 		else
 		{

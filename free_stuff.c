@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   free_stuff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 18:10:04 by ntom             ###   ########.fr       */
+/*   Created: 2019/09/03 18:39:23 by ntom              #+#    #+#             */
+/*   Updated: 2019/09/03 18:43:08 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_unsetenv(t_info *infos)
+void	ft_tabdel(char **tab)
 {
-	(void)infos;
+	int		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		ft_strdel(&tab[i]);
+		i++;
+	}
+	ft_memdel((void *)tab);
 }

@@ -6,17 +6,17 @@
 #    By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/30 16:32:31 by ntom              #+#    #+#              #
-#    Updated: 2019/08/07 17:31:29 by ntom             ###   ########.fr        #
+#    Updated: 2019/09/03 21:36:37 by ntom             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
-CFLAGS += -fsanitize=address -Wall -Wextra -Werror -I includes
+CFLAGS += -fsanitize=address -Wall -Wextra -I includes
 LIBDIR = srcs/libft
 
 SRC = builtins.c ft_cd.c ft_echo.c ft_env.c ft_setenv.c ft_unsetenv.c \
-		init_vars.c main.c signals.c tools.c
+		init_vars.c main.c signals.c tools.c free_stuff.c
 
 O_FILES = $(SRC:%.c=%.o)
 FLAGLIB = -L$(LIBDIR) -lft
