@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 21:30:45 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 00:19:56 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ int			init_vars_prompt(t_info *infos, int *i, char **path)
 	infos->args = NULL;
 	infos->status = 0;
 	if ((j = find_env(infos, "PATH")) != -1)
+	{
 		while (infos->envs[j][x] != '=')
 			x++;
-	if (path != NULL)
-		ft_strdel(path);
-	*path = ft_strdup(infos->envs[j] + x + 1);
+		if (path != NULL)
+			ft_strdel(path);
+			*path = ft_strdup(infos->envs[j] + x + 1);
+	}
 	*i = 0;
 	ft_putstr("$> ");
 	if (get_next_line(0, &infos->input) != 1)

@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 21:29:36 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 00:30:02 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char			**is_binary(t_info *infos)
 		return (NULL);
 	while (infos->envs[i][j] != '=')
 		j++;
-	path = ft_strsplit((infos->envs[i] + j), ':');
+	path = ft_strsplit((infos->envs[i] + j + 1), ':');
 	return (path);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 20:18:18 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 00:39:32 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void			ft_setenv(t_info *infos)
 	if (infos->argc == 1)
 		return (ft_env(infos));
 	if (!ft_isalpha(infos->args[1][0]))
-		return (ft_putendl("setenv: Variable name must begin woth a letter."));
+		return (ft_putendl("setenv: Variable name must begin with a letter."));
 	while (infos->args[1][i])
 	{
 		if (infos->args[1][i] != '_' && !ft_isalnum(infos->args[1][i]))
