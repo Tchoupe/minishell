@@ -6,23 +6,16 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/15 16:55:20 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/03 14:11:55 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void		init_vars(t_info *infos, char **env, int argc, char **argv)
+void		init_vars(t_info *infos, char **env)
 {
-	if (argc || argv)
-		;
 	infos->envs = NULL;
-	infos->keys = NULL;
-	infos->cont = NULL;
 	infos->envs = ft_tab_dup(env);
-	infos->pwd[0] = '\0';
-	infos->oldpwd[0] = '\0';
-	stock_env(infos);
 }
 
 int			init_vars_prompt(t_info *infos, int *i, char *path)

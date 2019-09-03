@@ -6,24 +6,47 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/15 17:34:23 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/03 14:11:28 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
+int				find_env(t_info *infos, char *needle)
+{
+	int				i;
+	int				j;
+
+	i = 0;
+	while (infos->envs[i])
+	{
+		j = 0;
+		while (infos->envs[i][j] && needle[j])
+		{
+			if (infos->envs[i][j] == '=' && needle[j] == '\0')
+				return (i);
+			if (infos->envs[i][j] != needle[j])
+				break ;
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}
+
 static char			**is_binary(t_info *infos)
 {
 	char			**path;
 	int				i;
+	int				j;
 
 	path = NULL;
-	i = 0;
-	while (infos->keys[i] && ft_strcmp("PATH", infos->keys[i]) != 0)
-		i++;
-	if (!(infos->keys[i]))
+	j = 0;
+	if ((i = find_env(infos, "PATH")) == -1)
 		return (NULL);
-	path = ft_strsplit(infos->cont[i], ':');
+	while (infos->envs[i][j] != '=')
+		j++;
+	path = ft_strsplit((infos->envs[i] + j), ':');
 	return (path);
 }
 
@@ -82,42 +105,15 @@ static void			forking(t_info *infos, char *path)
 		ft_putstr("Cannot execute\n");
 }
 
-int					stock_env(t_info *infos)
-{
-	int				i;
-	char			*tmp;
-
-	i = 0;
-	while (infos->envs[i])
-		i++;
-	if (!(infos->keys = (char **)ft_memalloc(sizeof(char *) * (i + 1)))
-	|| !(infos->cont = (char **)ft_memalloc(sizeof(char *) * (i + 1))))
-		return (0);
-	i = 0;
-	while (infos->envs[i])
-	{
-		tmp = (ft_strchr(infos->envs[i], '=') + 1);
-		(infos->cont)[i] = ft_strdup(tmp);
-		(infos->keys)[i] =
-			(ft_strndup(infos->envs[i], (tmp - infos->envs[i] - 1)));
-		if (ft_strcmp(infos->keys[i], "HOME") == 0)
-			infos->home = infos->cont[i];
-		else if (ft_strcmp(infos->keys[i], "PWD") == 0)
-			getcwd(infos->pwd, 4097);
-		else if (ft_strcmp(infos->keys[i], "OLDPWD") == 0)
-			ft_strcat(infos->oldpwd, infos->cont[i]);
-		i++;
-	}
-	return (1);
-}
-
 int					main(int argc, char **argv, char **env)
 {
 	int				i;
 	t_info			infos;
 	char			path[4097];
 
-	init_vars(&infos, env, argc, argv);
+	if (argv || argc)
+		;
+	init_vars(&infos, env);
 	signal(SIGINT, c_handler);
 	while (19)
 	{

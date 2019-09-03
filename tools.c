@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/15 17:33:49 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/03 15:15:44 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,25 @@ int			check_replace(t_info *infos)
 {
 	int			i;
 	char		buf[4097];
+	int			j;
+	char		*str;
+	char		tmp[4097];
 
-	infos->input = ft_strsrepl(infos->input, "~", infos->home);
 	i = 0;
-	while (infos->keys[i])
+	while (infos->envs[i])
 	{
+		str = NULL;
+		j = 0;
 		buf[0] = '\0';
+		tmp[0] = '\0';
 		ft_strcat(buf, "$");
-		ft_strcat(buf, infos->keys[i]);
-		if (ft_strcmp("PWD", infos->keys[i]) == 0)
-			infos->input = ft_strsrepl(infos->input, buf, infos->pwd);
-		else if (ft_strcmp("OLDPWD", infos->keys[i]) == 0)
-			infos->input = ft_strsrepl(infos->input, buf, infos->oldpwd);
-		else
-			infos->input = ft_strsrepl(infos->input, buf, infos->cont[i]);
-		i++;
+		while (infos->envs[i][j] != '=')
+			j++;
+		ft_strncat(buf, infos->envs[i], j);
+		ft_strcat(tmp, infos->input);
+		infos->input = ft_strsrepl(infos->input, buf, (infos->envs[i] + j + 1));
+		if (ft_strcmp(infos->input, tmp) == 0)
+			i++;
 	}
 	return (0);
 }

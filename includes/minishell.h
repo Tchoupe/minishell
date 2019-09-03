@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/15 16:29:10 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/03 14:11:42 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,11 @@ typedef struct	s_info
 	char		**envs;
 	char		**binaries;
 	int			status;
-	char		**keys;
-	char		**cont;
-	char		*home;
-	char		pwd[4097];
-	char		oldpwd[4097];
 	int			argc;
 }				t_info;
 
 /*
-** FUNCTIONS
+** BUILTINS
 */
 
 void			ft_cd();
@@ -85,14 +80,14 @@ int				check_replace(t_info *infos);
 ** INIT_VARS.C
 */
 
-void			init_vars(t_info *infos, char **env, int argc, char **argv);
+void			init_vars(t_info *infos, char **env);
 int				init_vars_prompt(t_info *infos, int *i, char *path);
 
 /*
 ** MAIN.C
 */
 
-int				stock_env(t_info *infos);
+int				find_env(t_info *infos, char *needle);
 void			c_handler(int sig_num);
 void			proghandler(int sig_num);
 
