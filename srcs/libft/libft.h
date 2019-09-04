@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/17 20:29:12 by ntom              #+#    #+#             */
-/*   Updated: 2019/05/30 22:55:27 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 02:00:35 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,12 @@ void				ft_putwchart(wchar_t c);
 int					get_next_line(const int fd, char **line);
 char				*ft_strndup(const char *s1, size_t n);
 char				*ft_strsrepl(char *str, char *match, char *replacement);
+
+typedef struct		s_file
+{
+	int				fd;
+	char			*buf;
+	struct s_file	*next;
+}					t_file;
 
 #endif

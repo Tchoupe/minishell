@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/04 15:59:15 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 02:26:37 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int		is_builtin(t_info *infos)
 		if (ft_strcmp(builtins[i], infos->args[0]) == 0)
 		{
 			if (i == 1)
+			{
+				free_stuff(infos);
 				exit(0);
+			}
 			g_fct_builtins[i].f(infos);
 			return (1);
 		}

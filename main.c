@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 00:47:23 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 02:34:27 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,16 @@ int					main(int argc, char **argv, char **env)
 			continue ;
 		infos.binaries = is_binary(&infos);
 		if (is_exec(infos.binaries, infos.args[0], &path))
+		{
 			forking(&infos, path);
+		}
 		else
 		{
 			ft_putstr("minishell: command not found: ");
 			ft_putstr(infos.args[0]);
 			ft_putchar('\n');
 		}
+		free_stuff(&infos);
 	}
 	return (0);
 }

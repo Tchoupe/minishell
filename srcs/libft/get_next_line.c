@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 18:15:36 by ntom              #+#    #+#             */
-/*   Updated: 2019/06/15 16:56:37 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 02:13:06 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	getn(char *tab[OPEN_MAX], const int fd, char **line)
 		i++;
 	tab[fd] = ft_strsub(tmp, i, ft_strlen(tmp));
 	ft_strdel(&tmp);
+	ft_strdel(&tab[fd]);
 	return (1);
 }
 

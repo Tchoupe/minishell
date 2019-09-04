@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 00:47:35 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 02:26:56 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int				init_vars_prompt(t_info *infos, int *i, char **path);
 */
 
 void			ft_tabdel(char **tab);
+void 			free_stuff(t_info *infos);
 
 /*
 ** MAIN.C
