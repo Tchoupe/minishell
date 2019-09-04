@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 02:34:27 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 16:25:47 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				find_env(t_info *infos, char *needle)
 	i = 0;
 	while (infos->envs[i])
 	{
-		if (ft_strcmp(infos->envs[i], needle) == 61)
+		if (ft_strcmp(infos->envs[i], needle) == '=')
 			return (i);
 		i++;
 	}

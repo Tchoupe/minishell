@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:39:23 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 02:26:46 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 16:03:48 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	ft_tabdel(char **tab)
 		return ;
 	while (tab[i])
 	{
-		ft_strdel(&tab[i]);
+		ft_strdel(&(tab[i]));
 		i++;
 	}
-	ft_memdel((void *)tab);
+	ft_memdel((void **)&tab);
 }
 
 void 	free_stuff(t_info *infos)
