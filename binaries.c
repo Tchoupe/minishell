@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 00:33:22 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/07 01:15:32 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 01:25:54 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void		forking(t_info *infos, char *path)
 {
 	pid_t			pid;
 
-	printf("path = %s\n", path);
 	if (!(access(path, X_OK)))
 	{
 		if ((pid = fork()) < 0)
@@ -81,7 +80,7 @@ static void		forking(t_info *infos, char *path)
 		}
 	}
 	else
-		ft_putstr("minishell: command may not exist\n");
+		ft_putstr("minishell: permission denied\n");
 }
 
 static int		is_exec(char **binaries, char *input, char **path)
