@@ -6,7 +6,7 @@
 #    By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/30 16:32:31 by ntom              #+#    #+#              #
-#    Updated: 2019/09/06 23:56:11 by ntom             ###   ########.fr        #
+#    Updated: 2019/09/07 00:37:37 by ntom             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS += -Wall -Wextra -I includes
 LIBDIR = srcs/libft
 
 SRC = builtins.c ft_cd.c ft_echo.c ft_env.c ft_setenv.c ft_unsetenv.c \
-		init_vars.c main.c signals.c tools.c free_stuff.c
+		init_vars.c main.c signals.c tools.c free_stuff.c binaries.c
 
 O_FILES = $(SRC:%.c=%.o)
 FLAGLIB = -L$(LIBDIR) -lft

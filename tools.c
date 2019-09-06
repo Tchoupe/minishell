@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 23:43:18 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 00:40:45 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,30 +84,6 @@ char		**minisplit(char const *s, int *argc)
 	}
 	str[j] = 0;
 	return (str);
-}
-
-char		**ft_tab_dup(char **str, int size)
-{
-	int			j;
-	char		**ret;
-
-	j = 0;
-	if (size == -1)
-	{
-		size++;
-		while (str[size])
-			size++;
-	}
-	if (!(ret = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (str[j] && j < size)
-	{
-		if (!(ret[j] = ft_strdup(str[j])))
-			return (NULL);
-		j++;
-	}
-	ret[size] = NULL;
-	return (ret);
 }
 
 int			check_replace(t_info *infos)

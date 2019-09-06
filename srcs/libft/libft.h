@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/17 20:29:12 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 16:36:26 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 00:39:56 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void				ft_putwchart(wchar_t c);
 int					get_next_line(const int fd, char **line);
 char				*ft_strndup(const char *s1, size_t n);
 char				*ft_strsrepl(char *str, char *match, char *replacement);
+char				**ft_tab_dup(char **str, int size);
 
 typedef struct		s_file
 {
