@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 16:54:03 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 19:57:21 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		init_vars(t_info *infos, char **env)
 {
-	infos->envs = NULL;
 	infos->envs = ft_tab_dup(env, -1);
 	infos->binaries = NULL;
 	infos->args = NULL;

@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 02:26:37 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 21:28:43 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,7 @@ int		is_builtin(t_info *infos)
 {
 	int			i;
 	const char	*builtins[] = {
-		"cd",
-		"exit",
-		"echo",
-		"env",
-		"setenv",
-		"unsetenv",
-		NULL
+		"cd", "exit", "echo", "env", "setenv", "unsetenv", NULL
 	};
 
 	i = 0;
@@ -41,7 +35,7 @@ int		is_builtin(t_info *infos)
 		{
 			if (i == 1)
 			{
-				free_stuff(infos);
+				free_stuff(infos, 1);
 				exit(0);
 			}
 			g_fct_builtins[i].f(infos);

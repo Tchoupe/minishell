@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 00:49:55 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 21:29:58 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void		ft_cd2(t_info *infos, struct stat *buf)
 			if (find_env(infos, "OLDPWD") == -1)
 				ft_putstr("OLDPWD: Undefined variable.\n");
 			else
-				chdir(ft_strchr(infos->envs[find_env(infos, "OLDPWD")], '=') + 1);
+				chdir(
+					ft_strchr(infos->envs[find_env(infos, "OLDPWD")], '=') + 1);
 			return ;
 		}
 		ft_putstr("cd: no such file or directory: ");
@@ -74,7 +75,8 @@ void			ft_cd(t_info *infos)
 	else if (infos->argc > 1)
 		ft_cd2(infos, &buf);
 	else if (infos->argc == 1)
-		if (chdir(ft_strchr(infos->envs[find_env(infos, "HOME")], '=') + 1) != 0)
+		if (chdir(
+			ft_strchr(infos->envs[find_env(infos, "HOME")], '=') + 1) != 0)
 			ft_putstr("HOME: Undefined variable.\n");
 	i = find_env(infos, "OLDPWD");
 	free(infos->envs[i]);
