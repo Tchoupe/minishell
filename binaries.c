@@ -6,13 +6,13 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 00:33:22 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/07 00:37:12 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 01:15:32 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char		**is_binary(t_info *infos)
+char			**is_binary(t_info *infos)
 {
 	char			**path;
 	int				i;
@@ -21,7 +21,10 @@ char		**is_binary(t_info *infos)
 	path = NULL;
 	j = 0;
 	if ((i = find_env(infos, "PATH")) == -1)
-		return (NULL);
+	{
+		path = ft_strsplit(infos->args[0], ':');
+		return (path);
+	}
 	while (infos->envs[i][j] != '=')
 		j++;
 	path = ft_strsplit((infos->envs[i] + j + 1), ':');
@@ -57,6 +60,7 @@ static void		forking(t_info *infos, char *path)
 {
 	pid_t			pid;
 
+	printf("path = %s\n", path);
 	if (!(access(path, X_OK)))
 	{
 		if ((pid = fork()) < 0)
