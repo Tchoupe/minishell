@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/21 22:13:16 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/03 15:12:38 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 18:35:15 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char		*ft_strsrepl(char *str, char *match, char *replacement)
 	ft_strncpy(ret, str, tmp - str);
 	ft_strcat(ret, replacement);
 	ft_strcat(ret, tmp + ft_strlen(match));
-	free(str);
+	ft_strdel(&str);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/17 20:29:12 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 02:00:35 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/04 16:36:26 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
-# define BUFF_SIZE 32
+# define BUFF_SIZE 2000
 # include <limits.h>
 # include <stdio.h>
 # include <unistd.h>

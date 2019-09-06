@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 16:25:47 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 18:44:36 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,13 @@ int					main(int argc, char **argv, char **env)
 		infos.args = minisplit(infos.input, &infos.argc);
 		infos.args = replace_tilde(infos.args, &infos);
 		if (!infos.args[0] || is_builtin(&infos))
+		{
+			free_stuff(&infos);
 			continue ;
+		}
 		infos.binaries = is_binary(&infos);
 		if (is_exec(infos.binaries, infos.args[0], &path))
-		{
 			forking(&infos, path);
-		}
 		else
 		{
 			ft_putstr("minishell: command not found: ");
