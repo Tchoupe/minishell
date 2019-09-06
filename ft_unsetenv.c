@@ -6,27 +6,18 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/04 16:28:16 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 23:19:55 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void			ft_unsetenv(t_info *infos)
+static void		do_unsetenv(t_info *infos, char **tmp, int size, int j)
 {
-	int		i;
-	int		size;
-	int		j;
-	char	**tmp;
 	int		x;
 	int		y;
+	int		i;
 
-	j = 1;
-	size = 0;
-	while (infos->envs[size])
-		size++;
-	if (infos->argc == 1)
-		return (ft_putendl("unsetenv: Too few arguments."));
 	while (infos->args[j])
 	{
 		if ((i = find_env(infos, infos->args[j])) != -1)
@@ -48,5 +39,20 @@ void			ft_unsetenv(t_info *infos)
 		}
 		j++;
 	}
+}
 
+void			ft_unsetenv(t_info *infos)
+{
+	int		size;
+	int		j;
+	char	**tmp;
+
+	j = 1;
+	size = 0;
+	tmp = NULL;
+	while (infos->envs[size])
+		size++;
+	if (infos->argc == 1)
+		return (ft_putendl("unsetenv: Too few arguments."));
+	do_unsetenv(infos, tmp, size, j);
 }

@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 21:29:58 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 23:39:46 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 static void		ft_cd3(t_info *infos)
 {
 	if (infos->args[1][0] == '/')
-	{
-		if (chdir(infos->args[1]) != 0)
-			ft_putstr("ROOT: Undefined variable\n");
-	}
+		chdir(infos->args[1]);
 	else if (access(infos->args[1], R_OK) == 0)
 	{
 		if (chdir(infos->args[1]) != 0)
@@ -75,8 +72,8 @@ void			ft_cd(t_info *infos)
 	else if (infos->argc > 1)
 		ft_cd2(infos, &buf);
 	else if (infos->argc == 1)
-		if (chdir(
-			ft_strchr(infos->envs[find_env(infos, "HOME")], '=') + 1) != 0)
+		if ((i = find_env(infos, "HOME") == -1)
+		|| chdir(ft_strchr(infos->envs[i], '=') + 1) != 0)
 			ft_putstr("HOME: Undefined variable.\n");
 	i = find_env(infos, "OLDPWD");
 	free(infos->envs[i]);

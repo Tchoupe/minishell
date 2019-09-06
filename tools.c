@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 18:37:57 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 23:43:18 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,16 @@ size_t		ft_c(char const *s)
 char		**replace_tilde(char **str, t_info *infos)
 {
 	int			i;
+	int			x;
 
+	if ((x = find_env(infos, "HOME")) == -1)
+		return (str);
 	i = 0;
 	while (str[i])
 	{
-		if (str[i][0] == '~')
+		if (str[i][0] == '~' && str[i][1] != '~')
 			str[i] = ft_strsrepl(str[i], "~",
-			ft_strchr(infos->envs[find_env(infos, "HOME")], '=') + 1);
+			ft_strchr(infos->envs[x], '=') + 1);
 		i++;
 	}
 	return (str);
