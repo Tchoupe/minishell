@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 19:54:29 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 00:30:40 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ static int			check_binaries(char **binaries, char *input, char **path)
 		buf[0] = '\0';
 		ft_strcat(buf, binaries[i]);
 		if (buf[ft_strlen(buf) - 1] != '/')
-		ft_strcat(buf, "/");
+			ft_strcat(buf, "/");
 		ft_strcat(buf, input);
 		if (stat(buf, &exist) != -1)
 		{
 			*path = ft_strdup(buf);
-		return (1);
+			return (1);
 		}
 		i++;
 	}
@@ -71,7 +71,6 @@ static int			is_exec(char **binaries, char *input, char **path)
 {
 	if (!binaries)
 		return (1);
-	ft_strdel(path);
 	if (ft_strchr(input, '/'))
 	{
 		*path = ft_strdup(input);
@@ -104,7 +103,21 @@ static void			forking(t_info *infos, char *path)
 		}
 	}
 	else
-		ft_putstr("Cannot execute\n");
+		ft_putstr("minishell: command may not exist\n");
+}
+
+static void			binaries_and_notfound(t_info *infos, char *path)
+{
+	if (is_exec(infos->binaries, infos->args[0], &path))
+		forking(infos, path);
+	else
+	{
+		ft_putstr("minishell: command not found: ");
+		ft_putstr(infos->args[0]);
+		ft_putchar('\n');
+	}
+	ft_strdel(&path);
+	free_stuff(infos, 0);
 }
 
 int					main(int argc, char **argv, char **env)
@@ -119,7 +132,7 @@ int					main(int argc, char **argv, char **env)
 	signal(SIGINT, c_handler);
 	while (19)
 	{
-		if (init_vars_prompt(&infos, &i, &path) != 0 || !(infos.input[0]))
+		if (init_vars_prompt(&infos, &i) != 0)
 			continue ;
 		check_replace(&infos);
 		infos.args = minisplit(infos.input, &infos.argc);
@@ -130,15 +143,7 @@ int					main(int argc, char **argv, char **env)
 			free_stuff(&infos, 0);
 			continue ;
 		}
-		if (is_exec(infos.binaries, infos.args[0], &path))
-			forking(&infos, path);
-		else
-		{
-			ft_putstr("minishell: command not found: ");
-			ft_putstr(infos.args[0]);
-			ft_putchar('\n');
-		}
-		free_stuff(&infos, 0);
+		binaries_and_notfound(&infos, path);
 	}
 	return (0);
 }

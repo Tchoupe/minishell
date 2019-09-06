@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:39:23 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 21:53:37 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/06 23:47:16 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_tabdel(char **tab)
 	ft_memdel((void **)&tab);
 }
 
-void 	free_stuff(t_info *infos, int exit_code)
+void	free_stuff(t_info *infos, int exit_code)
 {
 	if (exit_code == 1)
 		ft_tabdel(infos->envs);

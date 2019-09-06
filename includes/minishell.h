@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:40:05 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 19:50:38 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 00:30:32 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ char			**replace_tilde(char **str, t_info *infos);
 */
 
 void			init_vars(t_info *infos, char **env);
-int				init_vars_prompt(t_info *infos, int *i, char **path);
+int				init_vars_prompt(t_info *infos, int *i);
 
 /*
 ** FREE_STUFF.C
 */
 
 void			ft_tabdel(char **tab);
-void 			free_stuff(t_info *infos, int exit_code);
+void			free_stuff(t_info *infos, int exit_code);
 
 /*
 ** MAIN.C
