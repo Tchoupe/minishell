@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 23:39:46 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 00:55:37 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			ft_cd(t_info *infos)
 	else if (infos->argc > 1)
 		ft_cd2(infos, &buf);
 	else if (infos->argc == 1)
-		if ((i = find_env(infos, "HOME") == -1)
+		if (((i = find_env(infos, "HOME")) == -1)
 		|| chdir(ft_strchr(infos->envs[i], '=') + 1) != 0)
 			ft_putstr("HOME: Undefined variable.\n");
 	i = find_env(infos, "OLDPWD");
