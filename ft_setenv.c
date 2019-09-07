@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 22:41:59 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 18:15:26 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ static int		errors_setenv(t_info *infos)
 
 	i = 0;
 	if (infos->argc > 3)
-		return (write(1, "setenv: Too many arguments.\n", 28));
+		return (write(2, "setenv: Too many arguments.\n", 28));
 	if (infos->argc == 1)
 	{
 		ft_env(infos);
 		return (1);
 	}
 	if (!ft_isalpha(infos->args[1][0]))
-		return (write(1, str, 48));
+		return (write(2, str, 48));
 	while (infos->args[1][i])
 	{
 		if (infos->args[1][i] != '_' && !ft_isalnum(infos->args[1][i]))
 		{
-			ft_putendl("setenv: Variable"
-			" name must contain alphanumeric characters.");
+			ft_putendl_fd("setenv: Variable"
+			" name must contain alphanumeric characters.", 2);
 			return (1);
 		}
 		i++;

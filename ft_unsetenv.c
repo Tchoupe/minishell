@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/06 23:19:55 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 18:10:42 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ void			ft_unsetenv(t_info *infos)
 	while (infos->envs[size])
 		size++;
 	if (infos->argc == 1)
-		return (ft_putendl("unsetenv: Too few arguments."));
+		return (ft_putendl_fd("unsetenv: Too few arguments.", 2));
 	do_unsetenv(infos, tmp, size, j);
 }

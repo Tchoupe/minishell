@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 00:33:22 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/07 01:25:54 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 17:48:09 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ char			**is_binary(t_info *infos)
 	j = 0;
 	if ((i = find_env(infos, "PATH")) == -1)
 	{
-		path = ft_strsplit(infos->args[0], ':');
+		if (!(path = ft_strsplit(infos->args[0], ':')))
+			return (NULL);
 		return (path);
 	}
 	while (infos->envs[i][j] != '=')
 		j++;
-	path = ft_strsplit((infos->envs[i] + j + 1), ':');
+	if (!(path = ft_strsplit((infos->envs[i] + j + 1), ':')))
+		return (NULL);
 	return (path);
 }
 
@@ -64,7 +66,7 @@ static void		forking(t_info *infos, char *path)
 	{
 		if ((pid = fork()) < 0)
 		{
-			ft_putstr("Fork error\n");
+			ft_putendl_fd("Fork error", 2);
 			exit(0);
 		}
 		else if (pid == 0)
@@ -80,7 +82,7 @@ static void		forking(t_info *infos, char *path)
 		}
 	}
 	else
-		ft_putstr("minishell: permission denied\n");
+		ft_putendl_fd("minishell: permission denied", 2);
 }
 
 static int		is_exec(char **binaries, char *input, char **path)
@@ -101,9 +103,8 @@ void			binaries_and_notfound(t_info *infos, char *path)
 		forking(infos, path);
 	else
 	{
-		ft_putstr("minishell: command not found: ");
-		ft_putstr(infos->args[0]);
-		ft_putchar('\n');
+		ft_putstr_fd("minishell: command not found: ", 2);
+		ft_putendl_fd(infos->args[0], 2);
 	}
 	ft_strdel(&path);
 	free_stuff(infos, 0);

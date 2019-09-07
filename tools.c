@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 19:54:44 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/07 00:40:45 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/07 17:45:34 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,9 @@ int			check_replace(t_info *infos)
 			j++;
 		ft_strncat(buf, infos->envs[i], j);
 		ft_strcat(tmp, infos->input);
-		infos->input = ft_strsrepl(infos->input, buf, (infos->envs[i] + j + 1));
+		if (!(infos->input =
+			ft_strsrepl(infos->input, buf, (infos->envs[i] + j + 1))))
+			return (1);
 		if (ft_strcmp(infos->input, tmp) == 0)
 			i++;
 	}
