@@ -6,7 +6,7 @@
 /*   By: ntom <ntom@student.s19.be>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 02:09:37 by ntom              #+#    #+#             */
-/*   Updated: 2019/09/07 00:30:19 by ntom             ###   ########.fr       */
+/*   Updated: 2019/09/16 21:57:46 by ntom             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int			init_vars_prompt(t_info *infos, int *i)
 	infos->args = NULL;
 	infos->status = 0;
 	*i = 0;
-	ft_putstr("$> ");
+	ft_putstr("\033[0;36m");
+	ft_putstr(infos->envs[find_env(infos, "PWD") ] + 4);
+	ft_putstr("\033[0m $> ");
 	if (get_next_line(0, &infos->input) != 1)
 	{
 		ft_putstr("GNL FAILED\n");
